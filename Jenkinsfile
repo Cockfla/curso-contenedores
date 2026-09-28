@@ -45,7 +45,7 @@ pipeline {
                         --frontend dockerfile.v0 \
                         --local context=. \
                         --local dockerfile=. \
-                        --output type=image,\\\"name=carlosmarind/curso-contenedores:latest,carlosmarind/curso-contenedores:${BUILD_NUMBER}\\\",push=true
+                        --output type=image,\\\"name=cockfla/curso-contenedores:latest,cockfla/curso-contenedores:${BUILD_NUMBER}\\\",push=true
 
                         export DOCKER_CONFIG=/docker-config/github
                         test -s ${DOCKER_CONFIG}/config.json
@@ -54,7 +54,7 @@ pipeline {
                         --frontend dockerfile.v0 \
                         --local context=. \
                         --local dockerfile=. \
-                        --output type=image,\\\"name=ghcr.io/carlosmarind/curso-contenedores:latest,ghcr.io/carlosmarind/curso-contenedores:${BUILD_NUMBER}\\\",push=true
+                        --output type=image,\\\"name=ghcr.io/cockfla/curso-contenedores:latest,ghcr.io/cockfla/curso-contenedores:${BUILD_NUMBER}\\\",push=true
                     '''
                 }
             }
@@ -64,7 +64,7 @@ pipeline {
                 container('kubectl-tool'){
                     withKubeConfig([credentialsId: 'kubernetes-config']){
                         sh '''
-                           kubectl -n curso-contenedores set image deployment/curso-contenedores curso-contenedores=ghcr.io/carlosmarind/curso-contenedores:${BUILD_NUMBER}
+                           kubectl -n curso-contenedores set image deployment/curso-contenedores curso-contenedores=ghcr.io/cockfla/curso-contenedores:${BUILD_NUMBER}
                            kubectl -n curso-contenedores rollout status deployment/curso-contenedores
                         '''
                     }
