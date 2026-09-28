@@ -62,10 +62,12 @@ pipeline {
         stage('CD - Despliegue continuo'){
             steps{
                 container('kubectl-tool'){
-                    sh '''
-                       kubectl -n curso-contenedores set image deployment/curso-contenedores curso-contenedores=ghcr.io/carlosmarind/curso-contenedores:${BUILD_NUMBER}
-                       kubectl -n curso-contenedores rollout status deployment/curso-contenedores
-                    '''
+                    withKubeConfig([credentialsId: 'kubernetes-config']){
+                        sh '''
+                           kubectl -n curso-contenedores set image deployment/curso-contenedores curso-contenedores=ghcr.io/carlosmarind/curso-contenedores:${BUILD_NUMBER}
+                           kubectl -n curso-contenedores rollout status deployment/curso-contenedores
+                        '''
+                    }
                 }
             }
         }
