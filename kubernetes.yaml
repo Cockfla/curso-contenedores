@@ -46,7 +46,7 @@ spec:
         - name: regcred-gh
       containers:
         - name: curso-contenedores
-          image: ghcr.io/carlosmarind/curso-contenedores:latest
+          image: ghcr.io/cockfla/curso-contenedores:latest
           imagePullPolicy: Always
           env:
             - name: AMBIENTE
